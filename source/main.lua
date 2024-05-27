@@ -9,6 +9,8 @@ local playerImg
 
 local playerSprite
 
+import "game"
+
 local function myGameSetUp()
     print("Game setup start")
     gfx.setImageDrawMode(gfx.kDrawModeBlackTransparent)
@@ -26,6 +28,8 @@ end
 myGameSetUp()
 
 function playdate.update()
+    GameUpdate()
+
     gfx.clear()
     gfx.sprite.update()
     playdate.timer.updateTimers()

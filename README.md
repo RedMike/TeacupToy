@@ -27,7 +27,7 @@ local ts = FillSprite(64, 64 playdate.graphics.kColorBlack)
 
 ## Summary
 
-Post-menus there's 3 basic game states, starts in 1.
+Post-menus there's 4 basic game states, starts in 1.
 
 1. Place block:
 	a. Have a currently highlighted block from available blocks.
