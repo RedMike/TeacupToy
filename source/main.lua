@@ -38,7 +38,7 @@ local function myGameSetUp()
             if s == 1 then
                 tile = 3
             end
-            print("Tile at " .. i .. ", " .. j .. " = " .. tile)
+            -- print("Tile at " .. i .. ", " .. j .. " = " .. tile)
             tilemap:setTileAtPosition(i, j, tile)
         end
     end
