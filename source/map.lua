@@ -3,8 +3,8 @@
 import "debug"
 
 local mapData = {}
-local mapWidth = 12
-local mapHeight = 7
+local mapWidth = 10
+local mapHeight = 6
 
 local function clearMap(s)
     mapData = {}
