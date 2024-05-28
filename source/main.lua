@@ -34,12 +34,40 @@ local function recalculateTilemap()
         for j = 1,h+1 do
             local s = GetMapAt(i, j)
 
+            local a = GetMapAt(i-1, j-1)
+            local b = GetMapAt(i, j-1)
+            local c = GetMapAt(i+1, j-1)
+            local d = GetMapAt(i-1, j)
+            local f = GetMapAt(i+1, j)
+            local m = GetMapAt(i-1, j+1)
+            local n = GetMapAt(i, j+1)
+            local o = GetMapAt(i+1, j+1)
+
             -- TODO: figure out the right tile based on surrounding data
-            local tile = 2
-            if s == 1 then
-                tile = 9
+            local tile = 9 --default to show nothing
+            if s == 0 then --if it's a wall then we show the appropriate tile
+                if f == 0 and m == 0 and n == 0 and o == 1 then
+                    tile = 2
+                elseif d == 0 and m == 1 and n == 0 and o == 0 then
+                    tile = 4
+                elseif n == 1 then
+                    tile = 3
+                elseif f == 0 and a == 0 and b == 0 and c == 1 then
+                    tile = 18
+                elseif d == 0 and a == 1 and b == 0 and c == 0 then
+                    tile = 20
+                elseif b == 1 then
+                    tile = 19
+                elseif f == 1 then
+                    tile = 10
+                elseif d == 1 then
+                    tile = 12
+                else
+                    tile = 1
+                end
             end
-            -- print("Tile at " .. i .. ", " .. j .. " = " .. tile)
+
+            print("Tile at " .. i .. ", " .. j .. " = " .. tile)
             tilemap:setTileAtPosition(i, j, tile)
         end
     end

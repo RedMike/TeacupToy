@@ -4,11 +4,11 @@ import "debug"
 
 local mapData = {}
 local mapWidth = 10
-local mapHeight = 6
+local mapHeight = 7
 
 local function clearMap(s)
     mapData = {}
-    for i=1,mapWidth*mapHeight+1 do
+    for i=1,(mapWidth+1)*(mapHeight+1) do
         mapData[i] = s
     end
 end
@@ -39,7 +39,7 @@ function InitRandomMap()
     --TODO: actually generate
 
     -- first make a rectangular room
-    addMapRect(3, 2, 4, 4, 1)
+    addMapRect(4, 2, 4, 3, 1)
 
     DebugPrint("[map] InitRandomMap done")
 end
