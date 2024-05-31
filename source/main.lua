@@ -17,12 +17,12 @@ local tilemapHOffset
 
 local playerSprite
 
-local availableBlocks = {}
 local availableBlockTilemaps = {}
 
 import "map"
 import "game"
 import "block_data"
+import "block"
 
 local function recalculateTilemap()
     local w = GetMapWidth()
@@ -111,13 +111,13 @@ local function recalculateAvailableBlocks()
     local h = GetBlockHeight()
 
     -- TODO: only recalculate tilemap data when block data changes
-    local count = #availableBlocks
+    local count = GetAvailableBlockCount()
     for i = 1,count do
+        local data = GetAvailableBlock(i)
         availableBlockTilemaps[i] = gfx.tilemap.new()
         availableBlockTilemaps[i]:setSize(w, h)
         availableBlockTilemaps[i]:setImageTable(blockTilemapImg)
 
-        local data = availableBlocks[i]
         for x = 1,w do
             for y = 1,h do
                 local tile = 4
@@ -154,9 +154,9 @@ local function myGameSetUp()
     InitRandomMap()
     recalculateTilemap()
 
-    availableBlocks[1] = GetBlock(1)
-    availableBlocks[2] = GetBlock(2)
-    availableBlocks[3] = GetBlock(3)
+    AddRandomAvailableBlock()
+    AddRandomAvailableBlock()
+    AddRandomAvailableBlock()
     recalculateAvailableBlocks()
 
     print("Game setup end")
@@ -172,7 +172,7 @@ function playdate.update()
     gfx.clear()
     gfx.sprite.update()
     tilemap:draw(tilemapWOffset, tilemapHOffset)
-    local count = #availableBlocks
+    local count = GetAvailableBlockCount()
     for i = 1,count do
         local startX = 10 + i * 60
         local startY = screenH - 46
