@@ -34,6 +34,10 @@ local function recalculateTilemap()
         for j = 1,h+1 do
             local s = GetMapAt(i, j)
 
+            -- a  b  c
+            -- d (s) f
+            -- m  n  o
+
             local a = GetMapAt(i-1, j-1)
             local b = GetMapAt(i, j-1)
             local c = GetMapAt(i+1, j-1)
@@ -43,9 +47,33 @@ local function recalculateTilemap()
             local n = GetMapAt(i, j+1)
             local o = GetMapAt(i+1, j+1)
 
-            -- TODO: figure out the right tile based on surrounding data
             local tile = 9 --default to show nothing
-            if s == 0 then --if it's a wall then we show the appropriate tile
+
+            if s == 0 then
+                --if it's a wall then we always show the blank spot
+                tile = 1
+            elseif s == 1 then
+                --if it's not a wall then sometimes we show the specific tile
+                if a == 0 and b == 0 and d == 0 then
+                    tile = 2
+                elseif b == 0 and c == 0 and f == 0 then
+                    tile = 4
+                elseif d == 0 and m == 0 and n == 0 then
+                    tile = 18
+                elseif f == 0 and o == 0 and n == 0 then
+                    tile = 20
+                elseif d == 0 then
+                    tile = 10
+                elseif f == 0 then
+                    tile = 12
+                elseif n == 0 then
+                    tile = 19
+                elseif b == 0 then
+                    tile = 3
+                end
+            end
+
+            if false and s == 0 then --if it's a wall then we show the appropriate tile
                 if f == 0 and m == 0 and n == 0 and o == 1 then
                     tile = 2
                 elseif d == 0 and m == 1 and n == 0 and o == 0 then

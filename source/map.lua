@@ -4,7 +4,7 @@ import "debug"
 
 local mapData = {}
 local mapWidth = 10
-local mapHeight = 7
+local mapHeight = 6
 
 local function clearMap(s)
     mapData = {}
@@ -39,11 +39,11 @@ function InitRandomMap()
     --TODO: actually generate
 
     -- first make a rectangular room
-    addMapRect(4, 2, 4, 3, 1)
+    addMapRect(2, 1, 8, 4, 1)
     -- cut out a small square
-    --addMapRect(5, 3, 2, 2, 0) --TODO: needs graphical tile drawing fix
+    addMapRect(4, 3, 1, 2, 0)
     -- add a small square
-    --addMapRect(4, 5, 2, 2, 1) --TODO: needs graphical tile drawing fix
+    addMapRect(6, 5, 4, 1, 1)
 
     DebugPrint("[map] InitRandomMap done")
 end
