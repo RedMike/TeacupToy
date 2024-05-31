@@ -10,14 +10,19 @@ local gfx <const> = playdate.graphics
 local tileSize
 local tilemapImg
 local playerImg
+local blockTilemapImg
 local tilemap
 local tilemapWOffset
 local tilemapHOffset
 
 local playerSprite
 
+local availableBlocks = {}
+local availableBlockTilemaps = {}
+
 import "map"
 import "game"
+import "block_data"
 
 local function recalculateTilemap()
     local w = GetMapWidth()
@@ -101,6 +106,30 @@ local function recalculateTilemap()
     end
 end
 
+local function recalculateAvailableBlocks()
+    local w = GetBlockWidth()
+    local h = GetBlockHeight()
+
+    -- TODO: only recalculate tilemap data when block data changes
+    local count = #availableBlocks
+    for i = 1,count do
+        availableBlockTilemaps[i] = gfx.tilemap.new()
+        availableBlockTilemaps[i]:setSize(w, h)
+        availableBlockTilemaps[i]:setImageTable(blockTilemapImg)
+
+        local data = availableBlocks[i]
+        for x = 1,w do
+            for y = 1,h do
+                local tile = 4
+                if data[((y-1) * w) + x] ~= 0 then
+                    tile = 2
+                end
+                availableBlockTilemaps[i]:setTileAtPosition(x, y, tile)
+            end
+        end
+    end
+end
+
 local function myGameSetUp()
     print("Game setup start")
     gfx.setImageDrawMode(gfx.kDrawModeBlackTransparent)
@@ -113,6 +142,7 @@ local function myGameSetUp()
         return
     end
     tileSize = playerImg:getSize()
+    blockTilemapImg = gfx.imagetable.new("images/blockmap")
 
     playerSprite = gfx.sprite.new(playerImg)
     playerSprite:moveTo(-100, -100) --offscreen
@@ -123,6 +153,11 @@ local function myGameSetUp()
 
     InitRandomMap()
     recalculateTilemap()
+
+    availableBlocks[1] = GetBlock(1)
+    availableBlocks[2] = GetBlock(2)
+    availableBlocks[3] = GetBlock(3)
+    recalculateAvailableBlocks()
 
     print("Game setup end")
 end
@@ -136,6 +171,10 @@ function playdate.update()
 
     gfx.clear()
     gfx.sprite.update()
-    tilemap:draw(tilemapWOffset, tilemapHOffset) --TODO: offset tilemap by multiplier by screen size
+    tilemap:draw(tilemapWOffset, tilemapHOffset)
+    local count = #availableBlocks
+    for i = 1,count do
+        availableBlockTilemaps[i]:draw(10 + i * 60, screenH-40)
+    end
     playdate.timer.updateTimers()
 end

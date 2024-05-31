@@ -62,8 +62,9 @@ When entering 3:
 ## Initial MVP tasks
 
 [x] map drawing
-[ ] block graphics
-[ ] block hand drawing
+[x] block graphics
+[x] block hand drawing
+[ ] block outline
 [ ] mob drawing
 [ ] block selection process
 [ ] block map drawing
