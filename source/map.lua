@@ -40,6 +40,10 @@ function InitRandomMap()
 
     -- first make a rectangular room
     addMapRect(4, 2, 4, 3, 1)
+    -- cut out a small square
+    --addMapRect(5, 3, 2, 2, 0) --TODO: needs graphical tile drawing fix
+    -- add a small square
+    --addMapRect(4, 5, 2, 2, 1) --TODO: needs graphical tile drawing fix
 
     DebugPrint("[map] InitRandomMap done")
 end
