@@ -67,7 +67,7 @@ local function recalculateTilemap()
                 end
             end
 
-            print("Tile at " .. i .. ", " .. j .. " = " .. tile)
+            -- print("Tile at " .. i .. ", " .. j .. " = " .. tile)
             tilemap:setTileAtPosition(i, j, tile)
         end
     end
