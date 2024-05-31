@@ -58,3 +58,14 @@ When entering 1:
 
 When entering 3:
 1. Turn placed blocks into a list of movements that need to be done in sequence.
+
+## Initial MVP tasks
+
+[x] map drawing
+[ ] block graphics
+[ ] block hand drawing
+[ ] mob drawing
+[ ] block selection process
+[ ] block map drawing
+[ ] block rotation
+[ ] available vs placed blocks
