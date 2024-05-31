@@ -174,7 +174,12 @@ function playdate.update()
     tilemap:draw(tilemapWOffset, tilemapHOffset)
     local count = #availableBlocks
     for i = 1,count do
-        availableBlockTilemaps[i]:draw(10 + i * 60, screenH-40)
+        local startX = 10 + i * 60
+        local startY = screenH - 46
+        availableBlockTilemaps[i]:draw(startX+5, startY + 3)
+        gfx.setColor(gfx.kColorWhite)
+        gfx.setLineWidth(1)
+        gfx.drawRect(startX, startY+1, 40, 45)
     end
     playdate.timer.updateTimers()
 end

@@ -64,7 +64,7 @@ When entering 3:
 [x] map drawing
 [x] block graphics
 [x] block hand drawing
-[ ] block outline
+[x] block outline
 [ ] mob drawing
 [ ] block selection process
 [ ] block map drawing
