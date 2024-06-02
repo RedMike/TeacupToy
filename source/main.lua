@@ -151,12 +151,8 @@ local function myGameSetUp()
     tilemap = gfx.tilemap.new()
     tilemap:setImageTable(tilemapImg)
 
-    InitRandomMap()
     recalculateTilemap()
 
-    AddRandomAvailableBlock()
-    AddRandomAvailableBlock()
-    AddRandomAvailableBlock()
     recalculateAvailableBlocks()
 
     print("Game setup end")
@@ -165,9 +161,13 @@ end
 myGameSetUp()
 
 function playdate.update()
-    GameUpdate()
+    local gameState = GameUpdate()
+    if gameState == 0 then
+        myGameSetUp()
+        TryMoveToState(1)
+    end
 
-    --TODO: recalculate tilemap
+    --TODO: recalculate tilemap when map data/block data changed
 
     gfx.clear()
     gfx.sprite.update()

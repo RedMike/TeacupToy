@@ -1,4 +1,7 @@
 import "debug"
+import "map"
+import "block_data"
+import "block"
 
 -- game states:
 --  0 - first level init
@@ -8,11 +11,22 @@ import "debug"
 --  4 - animation all done
 --  5 - level end
 
-local currentState = 0;
+local currentState = 0
+local gameInitDone = false
+
+local playerX, playerY
 
 local function gameInit()
-    DebugPrint("[game] Game init")
+    if gameInitDone then
+        return
+    end
+    gameInitDone = true
 
+    DebugPrint("[game] Game init")
+    InitRandomMap()
+    AddRandomAvailableBlock()
+    AddRandomAvailableBlock()
+    AddRandomAvailableBlock()
 end
 
 local function gameEnded()
@@ -43,16 +57,29 @@ local function moveToState(newState)
     currentState = newState
 end
 
+function TryMoveToState(newState)
+    if newState == currentState then
+        return false
+    end
+    if currentState == 0 and not gameInitDone then
+        return false
+    end
+    moveToState(newState)
+    return true
+end
+
 function GameUpdate()
     if currentState == 0 then
         gameInit()
-        moveToState(1)
-        return
+        return currentState
     end
     if currentState == 5 then
         -- we're finished, no relevant state any more
-        return
+        return currentState
     end
+
+    -- TODO: state handling
+    return currentState
 end
 
 function GetGameState()
