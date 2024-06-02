@@ -133,7 +133,7 @@ end
 local function myGameSetUp()
     print("Game setup start")
     gfx.setImageDrawMode(gfx.kDrawModeBlackTransparent)
-    gfx.setBackgroundColor(gfx.kColorBlack);
+    gfx.setBackgroundColor(gfx.kColorClear);
 
     tilemapImg = gfx.imagetable.new("images/tilemap")
     playerImg = tilemapImg:getImage(1, 3)
@@ -169,8 +169,11 @@ function playdate.update()
 
     --TODO: recalculate tilemap when map data/block data changed
 
+    local playerX = GetPlayerX()
+    local playerY = GetPlayerY()
+
     gfx.clear()
-    gfx.sprite.update()
+    playerSprite:moveTo(tilemapWOffset + playerX * tileSize, tilemapHOffset + playerY * tileSize)
     tilemap:draw(tilemapWOffset, tilemapHOffset)
     local count = GetAvailableBlockCount()
     for i = 1,count do
@@ -181,5 +184,6 @@ function playdate.update()
         gfx.setLineWidth(1)
         gfx.drawRect(startX, startY+1, 40, 45)
     end
+    gfx.sprite.update()
     playdate.timer.updateTimers()
 end

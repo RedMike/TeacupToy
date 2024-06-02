@@ -27,6 +27,10 @@ local function gameInit()
     AddRandomAvailableBlock()
     AddRandomAvailableBlock()
     AddRandomAvailableBlock()
+
+    --TODO: actually place player/mobs properly
+    playerX = 7
+    playerY = 3
 end
 
 local function gameEnded()
@@ -84,4 +88,11 @@ end
 
 function GetGameState()
     return currentState
+end
+
+function GetPlayerX()
+    return playerX
+end
+function GetPlayerY()
+    return playerY
 end
