@@ -10,12 +10,14 @@ local gfx <const> = playdate.graphics
 local tileSize
 local tilemapImg
 local playerImg
+local mobImg
 local blockTilemapImg
 local tilemap
 local tilemapWOffset
 local tilemapHOffset
 
 local playerSprite
+local mobSprites = {}
 
 local availableBlockTilemaps = {}
 
@@ -137,6 +139,7 @@ local function myGameSetUp()
 
     tilemapImg = gfx.imagetable.new("images/tilemap")
     playerImg = tilemapImg:getImage(1, 3)
+    mobImg = tilemapImg:getImage(1, 4)
     if playerImg == nil then
         print("Missing image?")
         return
@@ -169,11 +172,20 @@ function playdate.update()
 
     --TODO: recalculate tilemap when map data/block data changed
 
-    local playerX = GetPlayerX()
-    local playerY = GetPlayerY()
+    local player = GetPlayer()
+    local mobs = GetMobs()
 
     gfx.clear()
-    playerSprite:moveTo(tilemapWOffset + playerX * tileSize, tilemapHOffset + playerY * tileSize)
+    playerSprite:moveTo(tilemapWOffset + player["x"] * tileSize, tilemapHOffset + player["y"] * tileSize)
+    for i = 1,#mobs do
+        local mob = mobSprites[i]
+        if i >= #mobSprites then
+            mob = gfx.sprite.new(mobImg)
+            mob:add()
+            mobSprites[i] = mob
+        end
+        mob:moveTo(tilemapWOffset + mobs[i]["x"] * tileSize, tilemapHOffset + mobs[i]["y"] * tileSize)
+    end
     tilemap:draw(tilemapWOffset, tilemapHOffset)
     local count = GetAvailableBlockCount()
     for i = 1,count do

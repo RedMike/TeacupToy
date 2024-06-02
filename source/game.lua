@@ -14,7 +14,8 @@ import "block"
 local currentState = 0
 local gameInitDone = false
 
-local playerX, playerY
+local player = {}
+local mobs = {}
 
 local function gameInit()
     if gameInitDone then
@@ -29,8 +30,18 @@ local function gameInit()
     AddRandomAvailableBlock()
 
     --TODO: actually place player/mobs properly
-    playerX = 7
-    playerY = 3
+    player = {
+        x = 7,
+        y = 3
+    }
+    mobs[1] = {
+        x = 5,
+        y = 3
+    }
+    mobs[2] = {
+        x = 4,
+        y = 1
+    }
 end
 
 local function gameEnded()
@@ -90,9 +101,10 @@ function GetGameState()
     return currentState
 end
 
-function GetPlayerX()
-    return playerX
+function GetPlayer()
+    return player
 end
-function GetPlayerY()
-    return playerY
+function GetMobs()
+    return mobs
 end
+
